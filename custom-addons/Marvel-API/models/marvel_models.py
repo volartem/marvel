@@ -32,4 +32,3 @@ class ComicModel(models.Model):
     character = fields.Many2many('character.model')
     story = fields.Many2many('story.model')
     image = fields.Many2many('image.model')
-

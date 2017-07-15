@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <template id="index">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#server-request').click(function() {
+                        $( "#server-response" ).empty();
+                        var textValue = $('#text').val();
+                        $.ajax({
+                            url: "/comics/api",
+                            method: 'GET',
+                            data: {text: textValue},
+                            success: function( result ) {
+                                $( "#server-response" ).html(result);
+                            }
+                        });
+                    });
+                });
+            </script>
+            <title>Comics</title>
+            <input type="text" id="text"/>
+            <button id="server-request">Push</button>
+            <div id="server-response">
+
+            </div>
+        </template>
+    </data>
+</odoo>

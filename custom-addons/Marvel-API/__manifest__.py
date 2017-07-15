@@ -10,5 +10,6 @@
     'category': 'API',
     'data': [
         'views/menu.xml',
+        'views/templates.xml',
     ]
 }
