@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Action to open Comics Task list -->
+    <act_window id="action_marvel"
+                name="Marvel"
+                res_model="comic.model"
+                view_mode="tree,form"/>
+    <!-- Menu item to open Comics list -->
+    <menuitem id="menu_marvel" name="Comics" action="action_marvel"/>
+</odoo>
