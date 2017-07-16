@@ -4,26 +4,61 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
             <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#server-request').click(function() {
-                        $( "#server-response" ).empty();
-                        var textValue = $('#text').val();
-                        $.ajax({
-                            url: "/comics/api",
-                            method: 'GET',
-                            data: {text: textValue},
-                            success: function( result ) {
-                                $( "#server-response" ).html(result);
-                            }
-                        });
-                    });
+                $('#server-request').click(function() {
+                    $( "#tables-body" ).empty();
+                    var textValue = $('#text').val();
+
+                    $.ajax({
+                        url: "/comics/api",
+                        //async: false,
+                        method: 'GET',
+                        data: {text: textValue},
+                        success: function (response) {
+                            var result = $.parseJSON(response);
+                            console.log(result);
+                            $.each(result.data.results, function (i, item) {
+                                var thumbnail = $('<img class="images-thumbnail"/>');
+                                thumbnail.attr('src', item.thumbnail.path + "." + item.thumbnail.extension);
+                                thumbnail.attr('alt', "No image found");
+                                thumbnail.attr('height', 50);
+                                var tr_row = $("<tr/>");
+                                tr_row.append($('<td/>').html(item.title))
+                                    .append($('<td/>').html(item.format))
+                                    .append($('<td/>').html( item.dates[0].date))
+                                    .append($('<td/>').html(item.ean))
+                                    .append($('<td/>').html(thumbnail[0].outerHTML));
+                                $('#tables-body').append(tr_row);
+                                tr_row.bind('click', {info: item}, fullInfo);
+                            });
+                        },
+                        timeout: 5000,
+                        error: function(){
+                            $('#tables-body').html('Please try again');
+                        }
+                    })
+
                 });
+
+                fullInfo = function(event){
+                    console.log('on_Click', event.data.info);
+                }
+            });
             </script>
             <title>Comics</title>
             <input type="text" id="text"/>
             <button id="server-request">Push</button>
-            <div id="server-response">
+            <table id="server-response">
+                <thead>
+                    <td>Name</td>
+                    <td>Format</td>
+                    <td>Date</td>
+                    <td>EAN</td>
+                    <td>Image</td>
+                </thead>
+                <tbody id="tables-body">
 
-            </div>
+                </tbody>
+            </table>
         </template>
     </data>
 </odoo>
