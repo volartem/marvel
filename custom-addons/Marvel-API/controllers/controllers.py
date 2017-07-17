@@ -4,7 +4,7 @@ import hashlib
 import requests
 import time
 import json
-from config import  PRIV_KEY, PUB_KEY
+from config import PRIV_KEY, PUB_KEY
 
 
 class Comics(http.Controller):
