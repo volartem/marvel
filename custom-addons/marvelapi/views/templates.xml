@@ -1,22 +1,16 @@
 <odoo>
     <data>
-        <!--<template id="assets_backend" name="marvel_assets" inherit_id="web.assets_backend">-->
-            <!--<xpath expr="." position="inside">-->
-                <!--<link rel="stylesheet" href="/Marvel-API/static/src/css/style.css"/>-->
-                <!--<script type="text/javascript" src="/Marvel-API/static/src/js/marvel-script.js"/>-->
-            <!--</xpath>-->
-        <!--</template>-->
         <template id="index">
             <t t-call="website.layout">
                 <t t-set="title">Comics</t>
-                <script type="text/javascript" src="/Marvel-API/static/src/js/marvel-script.js"/>
-                <link rel="stylesheet" href="/Marvel-API/static/src/css/style.css"/>
+                <script type="text/javascript" src="/marvelapi/static/src/js/marvel-script.js"/>
+                <link rel="stylesheet" href="/marvelapi/static/src/css/style.css"/>
                 <div class="oe_structure">
                      <div class="form-inline">
                         <input type="text" id="text" class="form-control" placeholder="Enter comic name"/>
                         <button id="server-request" class="btn btn-default">Get Comics</button>
                      </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="csrf-get" name="csrf_token" t-att-value="request.csrf_token()">
                         <table id="server-response" class="table-striped table-hover table-condensed">
                             <thead class="table-responsive">
                                 <td>Name</td>
@@ -24,6 +18,7 @@
                                 <td>Date</td>
                                 <td>EAN</td>
                                 <td>Image</td>
+                                <td></td>
                             </thead>
                             <tbody id="tables-body">
 

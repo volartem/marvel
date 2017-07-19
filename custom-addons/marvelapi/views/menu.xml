@@ -2,7 +2,7 @@
 <odoo>
     <!-- Action to open Comics Task list -->
     <act_window id="action_marvel"
-                name="Marvel"
+                name="marvel-api"
                 res_model="comic.model"
                 view_mode="tree,form"/>
     <!-- Menu item to open Comics list -->

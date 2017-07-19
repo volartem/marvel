@@ -33,7 +33,7 @@ $(document).ready(function () {
                     tr_row.bind('click', {info: item}, fullInfo);
                 });
             },
-            timeout: 8000,
+            // timeout: 8000,
             error: function () {
                 $('#tables-body').html('Please try again');
             }
@@ -54,6 +54,12 @@ $(document).ready(function () {
         obj.append($('<p/>').html('Characters: ' + iterate(item.characters.items)));
         obj.append($('<p/>').html('Stories: ' + iterate(item.stories.items)));
         obj.append(iterateImg(item.images));
+        obj.append($('<p/>').append($('<button>Save</button>')
+            .attr('id', 'id' + item.id))
+            .click(
+                {comic: item },
+                saveComics
+            ));
         return obj.attr('class', 'collapse').attr('id', 'spoiler' + item.id);
     };
     // function that iterate for list of objects and concatenate 'name' value
@@ -76,6 +82,23 @@ $(document).ready(function () {
             blockImages.append(images);
         });
         return blockImages
+    }
+    //save comics on db
+    saveComics = function(event) {
+        console.log('save comics', event.data.comic);
+        console.log('save comics', event);
+        $.ajax({
+            url: '/comics/api/save',
+            method: 'POST',
+
+            data: {
+                comic: JSON.stringify(event.data.comic)
+                //description: event.data.comic.description
+            },
+            success: function (response) {
+                console.log('response__from__save', response);
+            }
+        })
     }
 
 });
