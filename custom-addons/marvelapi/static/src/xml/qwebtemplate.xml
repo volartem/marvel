@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="HomePageTemplateMarvel">
+        <div class="oe_color_div"/>
+        <div style="background-color: lightgreen;">This is some simple HTML of <t t-esc="name"/> Comics app</div>
+        <input type="text" placeholder='enter'/>
+
+    </t>
+    <t t-name="ColorInputWidget">
+        <div>
+            Red: <input type="text" class="oe_color_red" value="00"/><br />
+            Green: <input type="text" class="oe_color_green" value="00"/><br />
+            Blue: <input type="text" class="oe_color_blue" value="00"/><br />
+        </div>
+    </t>
+    <t t-name="template_ajax">
+        <div class="o_content">
+            <div class="o_control_panel">
+                <div class="o_cp_searchview">
+                    <div class="input-group">
+                         <input type="text" id="text" class="o_searchview_input" placeholder="Enter comic name"/>
+                        <span class="input-group-btn">
+                            <button id="server-request" class="o_searchview btn">Get Comics</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="o_content">
+                 <div class="table-responsive">
+                    <table id="server-response" class="o_list_view table table-condensed table-striped">
+                        <thead class="table-responsive">
+                            <tr>
+                                <th class="o_column_sortable">Name</th>
+                                <th class="o_column_sortable">Format</th>
+                                <th class="o_column_sortable">Date</th>
+                                <th class="o_column_sortable">EAN</th>
+                                <th class="o_column_sortable">Image</th>
+                                <th class="o_column_sortable"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tables-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

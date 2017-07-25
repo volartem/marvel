@@ -11,5 +11,8 @@
     'data': [
         'views/menu.xml',
         'views/templates.xml',
-    ]
+    ],
+    'qweb': ['static/src/xml/project_button.xml',
+             'static/src/xml/qwebtemplate.xml',
+    ],
 }

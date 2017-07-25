@@ -1,10 +1,153 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Action to open Comics Task list -->
-    <act_window id="action_marvel"
-                name="marvel-api"
-                res_model="comic.model"
+    <template id="assets_backend" name="marvel_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/marvelapi/static/src/css/style.css"/>
+            <script type="text/javascript" src="/marvelapi/static/src/js/marvel-script.js"/>
+            <!--<script type="text/javascript" src="/marvelapi/static/src/js/api-script.js"/>-->
+            <script type="text/javascript" src="/marvelapi/static/src/js/web_ext.js"/>
+            <script type="text/javascript" src="/marvelapi/static/src/js/task_list.js"/>
+            <script type="text/javascript" src="/marvelapi/static/src/js/marvel_api_script.js"/>
+        </xpath>
+    </template>
+    <!--Tree View-->
+    <record model="ir.ui.view" id="tree_comic_model">
+        <field name="name">>comic.model.tree</field>
+        <field name="model">comic.model</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!--<button string="Push" type="object" name="click_request" class="btn btn-info"/>-->
+                <field name="name"/>
+                <field name="description"/>
+                <field name="ean"/>
+                <field name="published"/>
+                <field name="image"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form View-->
+    <record model="ir.ui.view" id="form_comic_model">
+        <field name="name">>comic.model.form</field>
+        <field name="model">comic.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="description"/>
+                            <field name="ean"/>
+                            <field name="published"/>
+                            <field name="image"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_marvel">
+        <field name="name">Marvel comics</field>
+        <field name="res_model">comic.model</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Another way declare view Character-->
+    <act_window id="character_action"
+                name="Marvel characters"
+                res_model="character.model"
                 view_mode="tree,form"/>
-    <!-- Menu item to open Comics list -->
-    <menuitem id="menu_marvel" name="Comics" action="action_marvel"/>
+
+    <!-- Another way declare view Story-->
+    <act_window id="story_action"
+                name="Marvel stories"
+                res_model="story.model"
+                view_mode="tree,form"/>
+
+    <!--Trying template-->
+    <record model="ir.ui.view" id="form_home_page_buttons">
+        <field name="name">Buttons form</field>
+        <field name="model">comicapi.model</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <!--The header tag is built to add buttons within. This puts them at the top -->
+                <header>
+                    <!--The oe_highlight class gives the button a red color when it is saved.
+                    It is usually used to indicate the expected behaviour. -->
+                    <p class="">Enter comic name</p>
+                    <button string="Search comics" type="object" name="create_request" class="btn btn-danger"/>
+                    <input type="text" name="value_input"/>
+                </header>
+                <sheet>
+                    <div name="buttons" class="o_cp_left o_cp_buttons">
+                        <button class="oe_stat_button"
+                                type="action" icon="fa-tasks"
+                                name="%(api_marvel)d"
+                                string="qwerty"
+                                help="Other to-dos for this user">
+                            <field string="User To-dos"
+                                   name="user_todo_count" />
+                        </button>
+                    </div>
+                    <group>
+                        <div class="form-inline">
+                            <button string="Search comics" type="object" name="create_request" class="btn btn-danger"/>
+                            <field name="name"/>
+                            <field name="image" invisible="1"/>
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="tree_home_page_buttons">
+        <field name="name">Buttons tree</field>
+        <field name="model">comicapi.model</field>
+        <field name="arch" type="xml">
+            <tree>
+                <button string="Save" type="object" name="save_comic_base_db" class="btn btn-info"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="ean"/>
+                <field name="published"/>
+                <field name="image"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="api_marvel">
+        <field name="name">Marvel get comics</field>
+        <field name="res_model">comicapi.model</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_home_page" model="ir.actions.client">
+        <field name="name">Marvel test script</field>
+        <field name="tag">marvelapi.homepage</field>
+    </record>
+
+    <record id="action_home_page_js" model="ir.actions.client">
+        <field name="name">Marvel test script</field>
+        <field name="tag">marvelapi.requestapi</field>
+    </record>
+
+    <menuitem id="marvel_top_menu" name="Marvel Comics"/>
+    <menuitem id="comics_sub_menu" name="Home"
+              parent="marvel_top_menu"/>
+    <menuitem id="comics_child_menu" name="All comics"
+              parent="comics_sub_menu" action="action_marvel"/>
+    <menuitem id="character_comics_menu" name="Characters of Comics"
+              parent="comics_sub_menu" action="character_action"/>
+    <menuitem id="story_comics_menu" name="Stories of Comics"
+              parent="comics_sub_menu" action="story_action"/>
+    <menuitem id="api_comics_menu" name="GET Comics db version"
+              parent="comics_sub_menu" action="api_marvel"/>
+    <!--<menuitem id="client_marvelapi_menu" name="JS Test Widget Page" parent="comics_sub_menu"-->
+              <!--action="action_home_page"/>-->
+    <menuitem id="client_marvelapi_sub_menu" name="Get comics" parent="comics_sub_menu"
+              action="action_home_page_js"/>
 </odoo>

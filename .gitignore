@@ -1,4 +1,7 @@
 .idea
-academy/
-oepetstore/
+academy
+oepetstore
+todo_app
+todo_user
 *.pyc
+api-script.js

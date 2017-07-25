@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import http
+from odoo import http, api
 import hashlib
 import requests
 import time
@@ -14,6 +14,10 @@ class Comics(http.Controller):
 
     @http.route('/comics/api', auth='public')
     def ajax(self, **kw):
+        """
+        request from client side to API
+        return json objects to client
+        """
         name = kw.get('text')
         if name:
             resp = request_marvel(name)
@@ -36,10 +40,9 @@ class Comics(http.Controller):
                 'description': comic.get('description'),
                 'ean': comic.get('ean'),
                 'published': comic.get('dates')[0].get('date'),
-                'thumbnail_url': '%s.%s' %
-                                 (comic.get('thumbnail').get('path'),
-                                  comic.get('thumbnail').get('extension')),
-
+                'image': '<html><body><img src="%s.%s" height="40" /></body></html>' %
+                         (comic.get('thumbnail').get('path'),
+                          comic.get('thumbnail').get('extension')),
             })
 
         return 'ok'
@@ -50,6 +53,10 @@ def get_hash(ts, priv_key, pub_key):
 
 
 def request_marvel(title):
+    """
+    request to API Marvel
+    return only results from json response API
+    """
     ts = str(time.time())
     hashes = get_hash(ts, PRIV_KEY, PUB_KEY)
     response = requests.get('http://gateway.marvel.com/v1/public/comics', params={
@@ -59,4 +66,4 @@ def request_marvel(title):
         'titleStartsWith': title,
         'limit': 100
     })
-    return json.loads(response.content)
+    return json.loads(response.content).get('data').get('results')

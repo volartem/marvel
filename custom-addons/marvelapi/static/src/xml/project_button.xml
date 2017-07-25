@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<template id="template" xml:space="preserve">
+    <t t-extend="ListView.buttons">
+        <t t-jquery="button.o_list_button_add" t-operation="replace">
+            <button t-if="widget.model == 'comicapi.model'"  class="oe_button oe_new_button oe_highlight" type="button">Создать новый проект</button>
+            <input type="text" />
+            <button t-if="widget.model != 'comicapi.model'" class="oe_button oe_list_add oe_highlight" type="button">Создать</button>
+        </t>
+        <!--<t t-jquery="button.o_button_import" t-operation="replace">-->
+
+        <!--</t>-->
+  </t>
+
+</template>
