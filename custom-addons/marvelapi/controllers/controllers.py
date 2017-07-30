@@ -40,7 +40,7 @@ class Comics(http.Controller):
                 'description': comic.get('description'),
                 'ean': comic.get('ean'),
                 'published': comic.get('dates')[0].get('date'),
-                'image': '<html><body><img src="%s.%s" height="40" /></body></html>' %
+                'image': '<html><body><img src="%s.%s" height="50" /></body></html>' %
                          (comic.get('thumbnail').get('path'),
                           comic.get('thumbnail').get('extension')),
             })
